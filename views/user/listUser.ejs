@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <title>BU Link Shortener</title>
+</head>
+<body>
+    <div class="fullColumn">
+        <div style="display:flex; justify-content:center">
+            <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+                <tr>
+                    <th>username</th>
+                    <th>password</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <% users.forEach( function(user) { %>
+                    <tr>
+                        <td><label class="label"><%=user.username%></label></td>
+                        <td><label class="label"><%=user.password%></label></td>
+                        <td><button onclick="location.href='http://localhost:1337/user/editUser/<%=user.id%>'" class="text-white px-4 py-2 rounded-mid bg-green-400 hover: bg-green-500" style="border-radius: 4px;" >Edit</button></td>
+                        <% if(user.username!="admin"){%>
+                            <form action="/user/deleteUser/<%=user.id%>" method="POST">
+                                <td><button type="submit" class="text-white px-4 py-2 rounded-mid bg-red-400 hover: bg-red-500" style="border-radius: 4px;" >Remove</button></td>
+                            </form>
+                        <%}%>
+                <% }); %>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

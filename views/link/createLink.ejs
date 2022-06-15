@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <title>BU Link Shortener</title>
+</head>
+<body>
+  <main class="py-6 px-24 flex items-center flex-col">
+
+
+    <form action="/shorturls" method="POST" onsubmit="submitForm(this);return false" >
+
+        <div style = "padding:0.5rem">
+            <label class="label">Link Title</label>
+              <input type="text" placeholder="Long Link as title if empty"
+              class="border px-4 py-2 rounded-full flex-1 focus:outline-none" name="title" style="width: 700px;">
+          </div>  
+
+      <div style = "padding:0.5rem">
+        <label class="label">Long Link / Destination Link</label>
+        <div class="control">
+          <input type="url" name="url" id="url" placeholder="Destination Link" required
+          class="border px-4 py-2 rounded-full flex-1 focus:outline-none" name="url" style="width: 700px" required>
+        </div>
+      </div>  
+
+
+      <div style = "padding:0.5rem">
+        <label class="label">Short Link</label>
+        <input type="text" placeholder="Random generate shorten link if empty" class="border px-4 py-2 rounded-full flex-1 focus:outline-none" name="short"  style="width: 700px">
+      </div>
+      
+      <div class="field" style="padding:0.5rem">
+          <div class="control">
+            <button type="submit" class="text-white px-4 py-2 rounded-full bg-blue-400 hover:bg-blue-500">Short'n</button>
+          </div>
+      </div>
+      
+
+
+
+    </form>
+
+    <script>
+      async function submitForm(formElem) {
+    
+      try {
+            var response = await fetch(formElem.action, {
+                method: formElem.method,
+                body: new FormData(formElem),
+            });
+    
+            if (response.ok) {
+                var user = await response.json();
+                alert("Create Shorten Link Completed!");
+                var str = 'http://localhost:1337/user/'+user.id+'/list';
+                const link = new URL(str);
+                location.assign(link)
+            } else {
+              alert(response.statusText);
+            } 
+            
+          } catch (error) {
+            console.log(error);
+          }
+      };
+    </script>
+
+  </main>
+</body>
+</html>

@@ -1,0 +1,30 @@
+
+.first-column {
+    width: 70%;
+    padding: 0 10px 0 0;
+    float: left;
+}
+
+.second-column {
+    width: 30%;
+    padding: 0 10px 0 0;
+    float: right;
+}
+
+@media only screen and (max-width: 800px) {
+
+   .first-column {
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        float: none;
+    }
+
+    .second-column {
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        float: none;
+    }
+    
+}

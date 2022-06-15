@@ -1,0 +1,85 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <title>BU Link Shortener</title>
+  </head>
+  <body>
+    <div class="fullColumn">
+        <div style="display: flex; justify-content: center">
+            <h1 class="text-2xl text-red-400" style="font-weight:bold">Found same destination link record, do you want to replace it?</h1>
+        </div>
+    
+        <label class="label">Same Destination Link Record</label>
+        <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+                <tr>
+                    <td><label class="label">Link Title</label></td>
+                    <td><%=thatUrl.title%></td>
+                </tr>
+                <tr>
+                    <td><label class="label">Destination Link</label></td>
+                    <td><%=thatUrl.url%></td>
+                </tr>
+                <tr>
+                    <td><label class="label">Short Link</label></td>
+                    <td><%=thatUrl.short%></td>
+                </tr>
+        </table>
+
+        <div style="display:flex; justify-content: center">
+            <img src="https://cdn.pixabay.com/photo/2016/03/31/14/47/download-1292814_960_720.png" style="height: 100px;width: 100px">
+        </div>
+        
+
+
+
+        <label class="label">New Create Link</label>
+        <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+                <tr>
+                    <td><label class="label">Link Title</label></td>
+                    <td><%=title%></td>
+                </tr>
+                <tr>
+                    <td><label class="label">Destination Link</label></td>
+                    <td><%=longUrl%></td>
+                </tr>
+                <tr>
+                    <td><label class="label">Short Link</label></td>
+                    <td><%=short%></td>
+                </tr>
+        </table>
+        
+        <div style="display: flex; justify-content:center; padding-top: 15px ;width: 100%;">
+            <button class="text-white px-4 py-2 rounded-full bg-blue-400 hover:bg-blue-500" style="margin:10px; width: 10vw" onclick="location.href='http://localhost:1337/user/<%=req.session.idd%>/list'">Cancel</button>
+            <form action="/link/replace/<%=thatUrl.id%>" method="POST">
+
+                    <label class="label" style="display: none" id="LTitle">New Link Title</label>
+                    <input type="text" placeholder="Long Link as title if empty"
+                    class="border px-4 py-2 rounded-full flex-1 focus:outline-none" name="title" id="newTitle" style="width: 700px; display: none" value="<%=title%>">
+
+    
+
+                    <label class="label" style="display: none" id="LLink">New Long Link</label>
+
+                    <input type="url" name="url" id="newDes" placeholder="Destination Link" required
+                    class="border px-4 py-2 rounded-full flex-1 focus:outline-none" name="url" style="width: 700px; display: none" value="<%=longUrl%>" required>
+
+            
+            
+
+                    <label class="label" style="display: none" id="SLink">New Short Link</label>
+                    <input type="text" id="newShort"placeholder="random generate shorten link if empty" class="border px-4 py-2 rounded-full flex-1 focus:outline-none" name="short"  style="width: 700px; display: none" value="<%=short%>">
+
+    
+
+                    <button type="submit"class="text-white px-4 py-2 rounded-full bg-red-400 hover:bg-red-500" id="Update" onclick="" style="margin:10px; width: 10vw">Replace</button>    
+
+            </form>
+        </div>
+
+
+    </div>
+    
+  </body>
+  </html>

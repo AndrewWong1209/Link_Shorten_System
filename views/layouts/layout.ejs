@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New Sails App</title>
+
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <%/* If you want to discourage search engines from indexing this site, uncomment the following line: */%>
+    <%/* <meta name="robots" content="noindex"> */%>
+    <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+    <link rel="stylesheet" href="/styles/topBar.css">
+    <link rel="stylesheet" href="/styles/CreateTwoColumn.css">
+    <link rel="stylesheet" href="/styles/TwoColumnSearch.css">
+
+
+    <!--STYLES-->
+    <link rel="stylesheet" href="/styles/CreateTwoColumn.css">
+    <link rel="stylesheet" href="/styles/importer.css">
+    <link rel="stylesheet" href="/styles/topBar.css">
+    <link rel="stylesheet" href="/styles/TwoColumnSearch.css">
+    <!--STYLES END-->
+  </head>
+
+  <script defer src="https://use.fontawesome.com/releases/v5.10.0/js/all.js"></script>
+  <body>
+
+    
+    <div id="app">
+    <div class="topnav">
+      <a href="http://localhost:1337/user/<%=req.session.idd%>/list" style="font-weight: bold"> Home </a>
+      <a href="http://localhost:1337/link/createLink" style="font-weight: bold">Create Link</a>
+      <% if(req.session.username=="admin") { %>
+        <a href="http://localhost:1337/user/addUserPage" style="font-weight: bold">Add User</a>
+        <a href="http://localhost:1337/user/listUser" style="font-weight: bold">Edit User</a>
+      <%}%>
+    </div>
+    <div class="topnavR">
+      <div style="padding:7px">
+          <button class="text-indigo-400 px-4 py-2 rounded-mid bg-gray-200" style="border-radius: 4px;" style="font-weight: bold"><%=req.session.username%></button>
+      </div>
+      <div style="padding:7px">
+        <form action="/user/logout" method="POST">
+          <button type="submit" class="text-white px-4 py-2 rounded-mid bg-red-400 hover:bg-red-500" style="border-radius: 4px;" >Logout</button>
+        </form>
+      </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue"></script>
+<!-- Full bundle -->
+<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+
+<!-- Individual components -->
+<script src="https://unpkg.com/buefy/dist/components/table"></script>
+<script src="https://unpkg.com/buefy/dist/components/input"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+    })
+</script>
+    
+    <div class="header" style="padding: 40px; text-align: left; background-color: #5f81df; color: white; font-size: 35px; display:flex; flex-direction: column">
+      <h1 style="display:flex; padding:5px">BU Link</h1>
+      <p style="font-size: 18px; display:flex; padding:5px">BU Link is a web-based system to help BU user to shorten the website link</p>
+    </div>
+
+    <section class="section" style="padding:0px; height: 100vh" >
+
+      
+
+      <div class="container" style="margin: 0px">
+        
+
+
+                  <%- body %>
+  
+  
+
+      </div>
+  </section>
+  </body>
+</html>

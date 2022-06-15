@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BU Link Shortener</title>
+
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <%/* If you want to discourage search engines from indexing this site, uncomment the following line: */%>
+    <%/* <meta name="robots" content="noindex"> */%>
+    <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+    <link rel="stylesheet" href="/styles/topBar.css">
+    <link rel="stylesheet" href="/styles/CreateTwoColumn.css">
+    <link rel="stylesheet" href="/styles/TwoColumnSearch.css">
+
+
+    <!--STYLES-->
+    <link rel="stylesheet" href="/styles/CreateTwoColumn.css">
+    <link rel="stylesheet" href="/styles/importer.css">
+    <link rel="stylesheet" href="/styles/topBar.css">
+    <link rel="stylesheet" href="/styles/TwoColumnSearch.css">
+    <!--STYLES END-->
+  </head>
+  <script defer src="https://use.fontawesome.com/releases/v5.10.0/js/all.js"></script>
+  <body>
+<script src="https://unpkg.com/vue"></script>
+<!-- Full bundle -->
+<script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+
+<!-- Individual components -->
+<script src="https://unpkg.com/buefy/dist/components/table"></script>
+<script src="https://unpkg.com/buefy/dist/components/input"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+    })
+</script>
+    
+    <div class="header" style="padding: 40px; text-align: left; background-color: #5f81df; color: white; font-size: 35px">
+      <h1>BU Link</h1>
+      <br>
+      <p style="font-size: 18px;">BU Link is a web-based system to help BU user to shorten the website</p>
+    </div>
+
+    <section class="section">
+
+      
+
+      <div class="container ">
+        
+
+
+        <form action="/user/login" method="POST" onsubmit="submitForm(this);return false">
+          <div class="field">
+            <p class="control has-icons-left has-icons-right">
+              <input class="input" type="text" placeholder="Username" name="username">
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" type="password" placeholder="Password" name="password">
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
+              <button class="button is-success">
+                Login
+              </button>
+            </p>
+          </div>
+        </form>
+        
+        <script>
+          async function submitForm(formElem) {
+        
+          try {
+                var response = await fetch(formElem.action, {
+                    method: formElem.method,
+                    body: new FormData(formElem),
+                });
+        
+                if (response.ok) {
+                    var user = await response.json();
+                    alert("Welcome back, " + user.username);
+                    var str = 'http://localhost:1337/user/'+ user.id+ '/list/';
+                    const link = new URL(str);
+                    location.assign(link)
+                } else if (response.status == 401) {
+                    var msg = await response.json();
+                    alert(msg);
+                } else {
+                    alert(response.statusText);
+                }
+                
+              } catch (error) {
+                console.log(error);
+              }
+          };
+        </script>
+  
+  
+
+      </div>
+  </section>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

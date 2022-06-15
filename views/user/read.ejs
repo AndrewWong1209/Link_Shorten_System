@@ -1,0 +1,198 @@
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <title>BU Link Shortener</title>
+</head>
+
+<body>
+  <div class="column1" style="padding-right: 0px; padding-left:0px">
+    <% var count = 0;%>
+    <% thatUser.shortened.forEach( function(shortUrl) { %>
+        <% count=count+1%>
+    <% }) %>
+    <% if (count>1){ %>
+        <p style="padding-bottom: 10px; border-bottom: 0.1rem solid #a6a9b1; padding-left:10px"><%=count%> results</p>
+    <% } else { %>
+        <p style="padding-bottom: 10px; border-bottom: 0.1rem solid #a6a9b1; padding-left:10px"><%=count%> result</p>
+    <% } %>
+
+    <% thatUser.shortened.forEach( function(shortUrl) { %>
+      <% if(thatUrl.id==shortUrl.id) {%>
+          <a href="http://localhost:1337/user/<%=req.session.idd%>/list/<%=shortUrl.id%>" style="background-color: #ffffff;; padding-left: 40px; overflow: hidden; text-overflow:ellipsis; line-height: 20px; padding-top: 13px; padding-bottom: 10px; border-bottom: 0.1rem solid #a6a9b1;">
+            <label class="labelBlack" style="font-weight: bold; height: 20px; display: inline-block; overflow: hidden; text-overflow:ellipsis;">
+              <%= shortUrl.title %>
+            </label>
+            <label class="label" style="font-weight: bold; font-size: 0.9rem; overflow:hidden; text-overflow:ellipsis;">
+              localhost:1337/<%= shortUrl.short %>
+            </label>
+        </a>
+      <%} else {%>
+          <a href="http://localhost:1337/user/<%=req.session.idd%>/list/<%=shortUrl.id%>" style="padding-left: 40px; overflow: hidden; text-overflow:ellipsis; line-height: 20px; padding-top: 13px; padding-bottom: 10px; border-bottom: 0.1rem solid #a6a9b1">
+            <label class="labelBlack" style="font-weight: bold; height: 20px; display: inline-block; overflow: hidden; text-overflow:ellipsis;">
+              <%= shortUrl.title %>
+            </label>
+            <label class="label" style="font-weight: bold; font-size: 0.9rem; overflow:hidden; text-overflow:ellipsis;">
+              localhost:1337/<%= shortUrl.short %>
+            </label>
+        </a>
+      <%}%>
+
+    <% }) %>
+  </div>
+  <div class="column2" >
+      <section class="section" style="padding-top: 30px">
+        <div class="container" style="margin: 0px">
+            <div class="item-detail--title" style="padding-bottom:10px"><%=thatUrl.title%></div>
+            <div class="actionbar-wrapper">
+                <div style="width:auto" style="display:block">
+                    <a  target="_blank" rel="noopener noreferrer" href="<%=thatUrl.url%>" id="shortLink" style="display:block; font-weight: bold">
+                        localhost:1337/<%=thatUrl.short%>
+                    </a>
+                </div>
+            </div>
+            <div style="display: inline-block">
+                <button class="text-white px-4 py-2 rounded-full bg-blue-400 hover:bg-blue-500" onclick="copyFunction()">Copy</button>
+            </div>
+        </div>
+
+        <div class="destination" style="padding-top:15px; width: 70%; ">
+            <div style="display: flex; float: left">
+                <label class="label" style="font-weight: bold;  color: #000000; height: 20px;">
+                    Destination:&nbsp;&nbsp;
+                </label>
+                <a target="_blank" rel="noopener noreferrer" href="<%=thatUrl.url%>" style=" font-weight: bold; font-size: 16px; overflow: hidden; text-overflow:ellipsis; color:rgb(92, 174, 252); display: inline-block; max-width: 60%"><%=thatUrl.url%></a>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content:center; padding-top: 15px">
+            <button class="text-white px-4 py-2 rounded-full bg-green-400 hover:bg-green-500" id="editButton" onclick="unhide()" style="width:10vw">Edit</button>
+        </div>
+
+
+        <form action="/link/update/<%=thatUrl.id%>" method="POST" onsubmit="submitFormUpdate(this);return false">
+        <div>
+            <div style = "padding:0.5rem">
+                <label class="label" style="display: none" id="LTitle">New Link Title</label>
+                  <input type="text" placeholder="Long Link as title if empty"
+                  class="border px-4 py-2 rounded-full flex-1 focus:outline-none" name="title" id="newTitle" style="width: 700px; display: none" value="<%=thatUrl.title%>">
+              </div> 
+
+              <div style = "padding:0.5rem">
+                <label class="label" style="display: none" id="LLink">New Long Link</label>
+                <div class="control">
+                  <input type="url" name="url" id="newDes" placeholder="Destination Link" required
+                  class="border px-4 py-2 rounded-full flex-1 focus:outline-none" name="url" style="width: 700px; display: none" value="<%=thatUrl.url%>" required>
+                </div>
+              </div>  
+        
+        
+              <div style = "padding:0.5rem">
+                <label class="label" style="display: none" id="SLink">New Short Link</label>
+                <input type="text" id="newShort"placeholder="Random generate shorten link if empty" class="border px-4 py-2 rounded-full flex-1 focus:outline-none" name="short"  style="width: 700px; display: none" value="<%=thatUrl.short%>">
+              </div>
+
+              <div>
+                <input type="text" name="oldUrl"  style="display: none" value="<%=thatUrl.url%>">
+                <input type="text" name="oldShort" style="display:none" value="<%=thatUrl.short%>">
+              </div>
+
+              <div style="display: flex; justify-content:center; padding-top: 15px ;width: 700px;">
+                <button type="submit"class="text-white px-4 py-2 rounded-full bg-green-400 hover:bg-green-500" id="Update" onclick="" style="display:none; margin:10px; width: 30vw">Update</button>    
+            </div>
+        </div>
+        </form>
+        <form action="/link/delete/<%=thatUrl.id%>" method="POST" onsubmit="submitFormDelete(this);return false">
+          <div style="display: flex; justify-content:center; padding-top: 15px ;width: 700px;">
+            <button type="submit" class="text-white px-4 py-2 rounded-full bg-red-400 hover:bg-red-500"id="Delete" style="display:none; margin:10px; width:30vw ">Delete Link</button>
+          </div>
+        </form>
+      </section>
+  </div>
+  <script>
+      function copyFunction() {
+        var clipboard = navigator.clipboard;
+            clipboard.writeText('localhost:1337/<%=thatUrl.short%>').then(function() {
+                alert('Copied to clipboard successfully!');
+            }, function() {
+                alert('Unable to write to clipboard. :-(');
+            });
+        }
+
+        function unhide(){
+            var newTitle = document.getElementById("newTitle");
+            var newDes = document.getElementById("newDes");
+            var newShort = document.getElementById("newShort");
+            var editButton = document.getElementById("editButton");
+            var updateButton = document.getElementById("Update");
+            var deleteButton = document.getElementById("Delete");
+
+            var LTitle = document.getElementById("LTitle");
+            var LLink = document.getElementById("LLink");
+            var SLink = document.getElementById("SLink");
+
+            if(newTitle.style.display==="none"){
+                newTitle.style.display="block"
+                newDes.style.display="block"
+                newShort.style.display="block"
+                LTitle.style.display="block"
+                LLink.style.display="block"
+                SLink.style.display="block"
+                updateButton.style.display="block"
+                deleteButton.style.display="block"
+                editButton.style.display="none"
+            }
+        }
+
+
+      
+      async function submitFormUpdate(formElem) {
+    
+      try {
+            var response = await fetch(formElem.action, {
+                method: formElem.method,
+                body: new FormData(formElem),
+            });
+    
+            if (response.ok) {
+                var user = await response.json();
+                alert("Shorten Link Record Updated!");
+                var str = 'http://localhost:1337/user/'+user.id+'/list';
+                const link = new URL(str);
+                location.assign(link)
+            } else {
+              alert(response.statusText);
+            } 
+            
+          } catch (error) {
+            console.log(error);
+          }
+      };
+
+      async function submitFormDelete(formElem) {
+    
+    try {
+          var response = await fetch(formElem.action, {
+              method: formElem.method,
+              body: new FormData(formElem),
+          });
+  
+          if (response.ok) {
+              var user = await response.json();
+              alert("Shorten Link Record Deleted!");
+              var str = 'http://localhost:1337/user/'+user.id+'/list';
+              const link = new URL(str);
+              location.assign(link)
+          } else {
+            alert(response.statusText);
+          } 
+          
+        } catch (error) {
+          console.log(error);
+        }
+    };
+  </script>
+</body>

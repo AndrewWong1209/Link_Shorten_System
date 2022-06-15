@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .topnav {
+    /* overflow: hidden; */
+    float:left;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    width:60%;
+    height: 53px;
+  }
+
+  .topnavR{
+    float: right;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    width:40%;
+    height: 53px;
+    flex-direction: row-reverse;
+  }
+
+
+  .topnav a {
+    float: left;
+    color: #000000;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .topnav a:hover {
+    background-color: #5f81df;
+    color: rgb(255, 255, 255);
+  }
